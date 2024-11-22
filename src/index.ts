@@ -1,12 +1,12 @@
-import express, { Request, Response } from "express";
+import express, { Request, Response } from 'express';
 
 const app = express();
-const PORT = process.env.PORT || 300;
+const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
 
 app.get('/', (req: Request, res: Response) => {
-    res.send('Hola mundo');
+    res.send('¡Hola mundo!');
 });
 
 app.listen(PORT, () => {
