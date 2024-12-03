@@ -1,17 +1,17 @@
-// src/entities/User.ts
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 
-@Entity()
+@Entity() // Decorador para identificar la clase como una entidad en la base de datos
 export class User {
-    @PrimaryGeneratedColumn()
+    @PrimaryGeneratedColumn() // Columna primaria auto-generada
     id?: number;
 
-    @Column()
+    @Column() // Columna para el nombre
     name?: string;
 
-    @Column()
+    @Column({ unique: true }) // Columna para el correo electrónico con restricción única
     email?: string;
 
-    @Column({ default: true })
-    isActive?: boolean;
+    @Column() // Columna para la contraseña
+    password?: string;
+
 }
