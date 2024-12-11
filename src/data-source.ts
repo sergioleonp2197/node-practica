@@ -8,7 +8,7 @@ export const AppDataSource = new DataSource({
     host: 'localhost',
     port: 5432,
     username: 'postgres',
-    password: '123',
+    password: '2197',
     database: 'postgres',
     synchronize: true, // Sincroniza la base de datos automáticamente (solo para desarrollo)
     logging: false,
@@ -19,8 +19,8 @@ export const AppDataSource = new DataSource({
 });
 
 // Inicializar la conexión
-AppDataSource.initialize()
-    .then(() => {
-        console.log('Conectado a la base de datos');
-    })
-    .catch((error) => console.log(error));
+// AppDataSource.initialize()
+//     .then(() => {
+//         console.log('Conectado a la base de datos');
+//     })
+//     .catch((error) => console.log(error));
