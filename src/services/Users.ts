@@ -36,7 +36,8 @@ export const createUser = async (user: User) => {
         const newUser = new User();
         newUser.name = user.name;
         newUser.email = user.email;
-        newUser.password = await bcrypt.hash(user.password, 10); // Cifrado seguro de la contraseña
+        newUser.password = user.password;
+        // newUser.password = await bcrypt.hash(user.password, 10); // Cifrado seguro de la contraseña
 
         // Validar los datos del usuario
         const errors = await validate(newUser);
@@ -58,6 +59,7 @@ export const createUser = async (user: User) => {
 export const getUserByEmail = async (email: string) => {
     try {
         const userRepository = getUserRepository();
+
 
         // Buscar el usuario por correo electrónico
         const user = await userRepository.findOneBy({ email });
