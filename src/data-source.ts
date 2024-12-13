@@ -18,9 +18,3 @@ export const AppDataSource = new DataSource({
     subscribers: [],
 });
 
-// Inicializar la conexión
-// AppDataSource.initialize()
-//     .then(() => {
-//         console.log('Conectado a la base de datos');
-//     })
-//     .catch((error) => console.log(error));
