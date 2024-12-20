@@ -1,7 +1,8 @@
 import { AppDataSource } from '../data-source'; // Asegúrate de importar correctamente tu fuente de datos
 import { User } from '../entities/User'; // Importa la entidad `User`
 import { validate } from 'class-validator'; // Para validar las entidades
-import bcrypt from 'bcrypt'; // Para manejar el cifrado de contraseñas
+import bcrypt from 'bcrypt'; // Para comparar contraseñas cifradas //borrar
+
 
 // Obtener el repositorio de la entidad `User`
 const getUserRepository = () => AppDataSource.getRepository(User);
@@ -18,15 +19,7 @@ class ValidationError extends Error {
 
 export const createUser = async (user: User) => {
     const userRepository = getUserRepository();
-    // //crea una nueva instancia de usuario
-    // const newUser = userRepository.create(user);
 
-    // // validar la instancia de usuario
-
-    // const errors = await validate(newUser);
-    // if (errors.length > 0) {
-    //     throw new ValidationError('Datos del usuario no son validos')
-    // }
 
 
     try {
@@ -36,7 +29,8 @@ export const createUser = async (user: User) => {
         const newUser = new User();
         newUser.name = user.name;
         newUser.email = user.email;
-        newUser.password = await bcrypt.hash(user.password, 10); // Cifrado seguro de la contraseña
+        newUser.password = user.password;
+        // newUser.password = await bcrypt.hash(user.password, 10); // Cifrado seguro de la contraseña
 
         // Validar los datos del usuario
         const errors = await validate(newUser);
@@ -54,19 +48,6 @@ export const createUser = async (user: User) => {
     }
 };
 
-// Obtener un usuario por correo electrónico
-export const getUserByEmail = async (email: string) => {
-    try {
-        const userRepository = getUserRepository();
-
-        // Buscar el usuario por correo electrónico
-        const user = await userRepository.findOneBy({ email });
-        return user || null; // Retornar null si no se encuentra
-    } catch (error) {
-        console.error('Error al obtener usuario:', error);
-        throw error;
-    }
-};
 
 // Obtener todos los usuarios
 export const getUsers = async () => {
@@ -81,3 +62,21 @@ export const getUsers = async () => {
         throw error;
     }
 }
+
+// Obtener un usuario por correo electrónico
+export const getUserByEmail = async (email: string) => {
+    try {
+        const userRepository = getUserRepository();
+
+
+        // Buscar el usuario por correo electrónico
+        const user = await userRepository.findOneBy({ email });
+        return user || null; // Retornar null si no se encuentra
+    } catch (error) {
+        console.error('Error al obtener usuario:', error);
+        throw error;
+    }
+};
+
+
+
