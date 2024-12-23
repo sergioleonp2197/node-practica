@@ -1,7 +1,6 @@
 import { AppDataSource } from '../data-source'; // Asegúrate de importar correctamente tu fuente de datos
 import { User } from '../entities/User'; // Importa la entidad `User`
 import { validate } from 'class-validator'; // Para validar las entidades
-import bcrypt from 'bcrypt'; // Para comparar contraseñas cifradas //borrar
 
 
 // Obtener el repositorio de la entidad `User`
@@ -19,8 +18,7 @@ class ValidationError extends Error {
 
 export const createUser = async (user: User) => {
     const userRepository = getUserRepository();
-
-
+   
 
     try {
 
