@@ -7,6 +7,6 @@ const router = Router();
 
 router.post('/signup', signupController,)
 router.get('/signup/login', obtenerEmail);
-router.post('/login',loginController);
+router.post('/login', loginController);
 
 export default router;

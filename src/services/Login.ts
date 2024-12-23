@@ -6,14 +6,14 @@ import { User } from '../entities/User';
 
 const SECRET_KEY = 'mi_clave_secreta';
 
-export const login = async (req: Request, res: Response) => {
+export const login = async (user: User) => {
+    const { email, password } = user;
 
     try {
-        const { email, password } = req.body;
 
         //validacion inicial de los datos
         if (!email || !password) {
-            return res.status(400).json({ success: false, message: "Email y contraseña requeridos" });
+            throw new Error('Email y password son requeridos')
 
         }
         const userRepository = AppDataSource.getRepository(User);
@@ -21,15 +21,15 @@ export const login = async (req: Request, res: Response) => {
         //buscar usuario por corrreo
         const user = await userRepository.findOneBy({ email });
         if (!user) {
-            return res.status(400).json({ success: false, message: 'Usuario no encontrado' });
+            throw new Error('Usuario no encotrado');
 
         }
         // Comparar la contraseña usando el método comparePassword de la entidad User
 
         const isPasswordValid = await user.comparePassword(password);
         if (!isPasswordValid) {
-            return res.status(401).json({ success: false, message: 'Contraseña incorrecta' });
 
+            throw new Error('Password incorrecta');
         }
 
         //Generar el token JWT
@@ -38,20 +38,12 @@ export const login = async (req: Request, res: Response) => {
             SECRET_KEY,                        // Clave secreta
             { expiresIn: '1h' }                // Tiempo de expiración
         );
-        //Enviar respuesta exitosa
-        return res.status(200).json({
-            success: true,
-            message: 'Inicio de sesion exitoso',
-            token,
-            user: { id: user.id, email: user.email, name: user.name },
-        });
+        //Enviar token
+        return token;
     } catch (error) {
-        console.error('Error en el proceso de login:', error);
-        return res.status(500).json({
-            success: false,
-            message: 'Error en el servidor, por favor intente nuevamente más tarde',
-        })
+        console.error('Error en el proceso de login:');
+        throw error;
     }
 
 };
-export  default login;
+export default login;

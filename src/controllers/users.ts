@@ -1,5 +1,7 @@
 import { Request, Response } from 'express';
 import { createUser, getUserByEmail } from '../services/Users'
+import login from '../services/Login';
+import { User } from '../entities/User';
 
 
 
@@ -45,11 +47,11 @@ export const loginController = async (req: Request, res: Response) => {
 
         // Validar que los campos estén presentes
         if (!email || !password) {
-            return res.status(400).json({ error: 'El email y la contraseña son obligatorios' });
+            res.status(400).json({ error: 'El email y la contraseña son obligatorios' });
         }
 
         // Llamar al servicio de login
-        const token = await loginUser(email, password);
+        const token = await login({ email, password } as User);
 
         res.status(200).json({ message: 'Inicio de sesión exitoso', token });
     } catch (error: any) {
