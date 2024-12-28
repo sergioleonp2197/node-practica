@@ -1,6 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, BeforeInsert } from 'typeorm';
 import { IsEmail, IsNotEmpty, MinLength } from 'class-validator';
-import * as bcrypt from 'bcrypt';
+import * as bcrypt from 'bcryptjs';
 
 @Entity()
 export class User {
@@ -20,13 +20,14 @@ export class User {
     password!: string;
 
     @BeforeInsert()
-    async hashPassword() {
+    async passwordHash() {
         if (this.password) {
             this.password = await bcrypt.hash(this.password, 10); // Cifra la contraseña antes de insertarla
         }
     }
 
     // Método para verificar contraseñas
+    //se reutiliza en el login user.comparePassword
     async comparePassword(plainPassword: string): Promise<boolean> {
         return bcrypt.compare(plainPassword, this.password);
     }

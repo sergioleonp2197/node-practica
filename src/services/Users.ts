@@ -19,7 +19,6 @@ class ValidationError extends Error {
 export const createUser = async (user: User) => {
     const userRepository = getUserRepository();
    
-   
 
     try {
 
@@ -61,3 +60,21 @@ export const getUsers = async () => {
         throw error;
     }
 }
+
+// Obtener un usuario por correo electrónico
+export const getUserByEmail = async (email: string) => {
+    try {
+        const userRepository = getUserRepository();
+
+
+        // Buscar el usuario por correo electrónico
+        const user = await userRepository.findOneBy({ email });
+        return user || null; // Retornar null si no se encuentra
+    } catch (error) {
+        console.error('Error al obtener usuario:', error);
+        throw error;
+    }
+};
+
+
+
