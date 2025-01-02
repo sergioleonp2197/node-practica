@@ -1,11 +1,11 @@
 import { Entity, PrimaryGeneratedColumn, Column, BeforeInsert } from 'typeorm';
 import { IsEmail, IsNotEmpty, MinLength } from 'class-validator';
-import * as bcrypt from 'bcryptjs';
+import * as bcrypt from 'bcryptjs'; // Importar bcrypt para cifrar contraseñas
 
 @Entity()
 export class User {
     @PrimaryGeneratedColumn()
-    id?: number;
+    id!: number;
 
     @IsNotEmpty({ message: 'El nombre no puede estar vacío' })
     @Column()
