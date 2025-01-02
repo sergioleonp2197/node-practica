@@ -10,7 +10,7 @@ const SECRET_KEY = 'mi_clave_secreta';
 // Middleware de autenticación
 export const authMiddleware = (req: Request, res: Response, next: NextFunction) => {
     const authHeader = req.headers.authorization;
-
+    
     // Verificar si el encabezado `Authorization` está presente
     if (!authHeader) {
         res.status(401).json({ message: 'Token no proporcionado' });
