@@ -28,8 +28,7 @@ export const createUser = async (user: User) => {
         newUser.name = user.name;
         newUser.email = user.email;
         newUser.password = user.password;
-        // newUser.password = await bcrypt.hash(user.password, 10); // Cifrado seguro de la contraseña
-
+    
         // Validar los datos del usuario
         const errors = await validate(newUser);
         if (errors.length > 0) {
