@@ -4,7 +4,7 @@ import healthRouter from './routes/health';
 import userRouter from './routes/users'
 import { AppDataSource } from './data-source';
 import { errorHandler } from './middlewares/errorHandler';
-// import { loginController } from './controllers/users';
+
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -12,6 +12,7 @@ const PORT = process.env.PORT || 3000;
 // Middlewares
 app.use(express.json());
 app.use(errorHandler);
+
 // Rutas
 app.use(healthRouter); // Acá le decimos a la app que use la ruta nueva creada en el archivo src/routes/health.ts
 app.use(userRouter);
