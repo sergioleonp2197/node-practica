@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { createUser, getUserByEmail } from '../services/Users'
-import login from '../services/Login';
+import { login } from '../services/Login';
 import { User } from '../entities/User';
 
 
@@ -22,22 +22,42 @@ export const signupController = async (req: Request, res: Response) => {
     }
 
 
-}
+};
 
 
 export const obtenerEmail = async (req: Request, res: Response) => {
-    try {
-        const user = req.body.email;
-        const userEmail = await getUserByEmail(user);
-        res.status(201).json({
-            success: true,
-            data: userEmail
+
+      try {
+        const { email } = req.body;
+    
+        // Validación: Verificar que el campo email no esté vacío
+        if (!email) {
+          throw new Error('El campo email es obligatorio.');
+        }
+    
+        // Validación: Verificar que el email tenga un formato válido
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+          throw new Error('El formato del correo electrónico es inválido.');
+        }
+    
+        // Buscar el usuario en la base de datos
+        const userEmail = await getUserByEmail(email);
+    
+        // Si el usuario no existe, lanzar un NotFoundError
+        if (!userEmail) {
+          throw new Error('Usuario no encontrado con el correo proporcionado.');
+        }
+    
+        // Si todo está bien, devolver la respuesta exitosa
+        res.status(200).json({
+          success: true,
+          data: userEmail,
         });
-    } catch (error) {
-        console.error('Error en el controlador error')
-        res.status(500).json({ message: 'Error al encontrar usuario', error: error })
-    }
-}
+      } catch (error:any) {
+        res.status(401).json({ error: error.message });
+      }
+};
 
 
 

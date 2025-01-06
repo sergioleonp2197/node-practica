@@ -14,10 +14,16 @@ router.post('/signup', signupController,)
 router.get('/signup/login', obtenerEmail);
 router.post('/login', loginController);
 
-router.get('/profile', authMiddleware, (req, res) => {
+router.get('/profile', authMiddleware, async (req, res) => {
+    const user =  req.user;
+    const { id, email } =  user as JwtPayload;
+    
     res.json({
         message: 'Bienvenido al perfil protegido',
-        user: req.user
+        user: {
+            id: id,
+            email: email,
+        }
     });
 });
 
