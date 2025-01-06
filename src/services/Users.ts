@@ -2,10 +2,8 @@ import { AppDataSource } from '../data-source'; // Asegúrate de importar correc
 import { User } from '../entities/User'; // Importa la entidad `User`
 import { validate } from 'class-validator'; // Para validar las entidades
 
-
 // Obtener el repositorio de la entidad `User`
 const getUserRepository = () => AppDataSource.getRepository(User);
-
 
 class ValidationError extends Error {
     constructor(message: string, public details?: any) {
@@ -14,15 +12,10 @@ class ValidationError extends Error {
     }
 }
 
-
-
 export const createUser = async (user: User) => {
     const userRepository = getUserRepository();
    
-
     try {
-
-
         // Crear una nueva instancia de usuario
         const newUser = new User();
         newUser.name = user.name;
@@ -45,7 +38,6 @@ export const createUser = async (user: User) => {
     }
 };
 
-
 // Obtener todos los usuarios
 export const getUsers = async () => {
     try {
@@ -65,7 +57,6 @@ export const getUserByEmail = async (email: string) => {
     try {
         const userRepository = getUserRepository();
 
-
         // Buscar el usuario por correo electrónico
         const user = await userRepository.findOneBy({ email });
         return user || null; // Retornar null si no se encuentra
@@ -74,6 +65,3 @@ export const getUserByEmail = async (email: string) => {
         throw error;
     }
 };
-
-
-
