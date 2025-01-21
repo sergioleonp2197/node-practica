@@ -12,7 +12,7 @@ export class ValidationError extends Error {
   // src/errors/NotFoundError.ts
   export class NotFoundError extends Error {
     status: number;
-  
+    
     constructor(message: string) {
       super(message);
       this.name = 'NotFoundError';
