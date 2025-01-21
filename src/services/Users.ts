@@ -6,7 +6,7 @@ import { validate } from 'class-validator'; // Para validar las entidades
 const getUserRepository = () => AppDataSource.getRepository(User);
 
 class ValidationError extends Error {
-    constructor(message: string, public details?: any) {
+    constructor(message: string, public details?: object) {
         super(message);
         this.name = 'ValidationError';
     }

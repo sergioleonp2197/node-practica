@@ -1,12 +1,12 @@
 import 'reflect-metadata'; // Importa reflect-metadata para usar decoradores
 import express from 'express'; // Importa express para crear el servidor
-import healthRouter from './routes/health'; // Importa el router de health
 import userRouter from './routes/users'; // Importa el router de users
 import { AppDataSource } from './data-source'; // Importa la fuente de datos
 import { errorHandler } from './middlewares/errorHandler'; // Importa el middleware de manejo de errores
+import { ENV } from './config/env';
 
 const app = express(); // Crea una instancia de express
-const PORT = process.env.PORT || 3000; // Define el puerto en el que correrá el servidor
+const PORT = ENV.DB_PORT || 3000; // Define el puerto en el que correrá el servidor
 
 // Middlewares
 app.use(express.json()); // Middleware para parsear JSON
