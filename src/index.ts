@@ -3,12 +3,18 @@ import express from 'express'; // Importa express para crear el servidor
 import userRouter from './routes/users'; // Importa el router de users
 import { AppDataSource } from './data-source'; // Importa la fuente de datos
 import { errorHandler } from './middlewares/errorHandler'; // Importa el middleware de manejo de errores
-import { ENV } from './config/env';
+// import { ENV } from './config/env';
+
+// Importa express para crear el servidor
 
 const app = express(); // Crea una instancia de express
-const PORT = ENV.DB_PORT || 3000; // Define el puerto en el que correrá el servidor
+const PORT = process.env.PORT || 400; ; // Define el puerto en el que correrá el servidor
 
 // Middlewares
+app.get('/', (req, res) => {
+    res.send('Hola mundo');
+})
+
 app.use(express.json()); // Middleware para parsear JSON
 app.use(errorHandler); // Middleware para manejar errores
 
