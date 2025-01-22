@@ -1,20 +1,18 @@
 // src/data-source.ts
 import { DataSource } from 'typeorm';
-import { User } from './entities/User'
-
+import { ENV } from './config/env';
 
 export const AppDataSource = new DataSource({
     type: 'postgres',
-    host: 'localhost',
-    port: 5432,
-    username: 'postgres',
-    password: '2197',
-    database: 'postgres',
-    synchronize: true, // Sincroniza la base de datos automáticamente (solo para desarrollo)
+    host: ENV.DB_HOST,
+    port: ENV.DB_PORT,
+    username: ENV.DB_USER,
+    password: ENV.DB_PASSWORD,
+    database: ENV.DB_NAME,
+    synchronize: false, // Sincroniza la base de datos automáticamente (solo para desarrollo)
     logging: false,
-    entities: [User],
-    // entities: [__dirname + '/entities/*.ts'],
-    migrations: [__dirname + '/migrations/*.ts'],
+    entities: [__dirname + '/entities/*.ts'],
+    migrations: [__dirname + '/migration/*.ts'],
     subscribers: [],
 });
 
